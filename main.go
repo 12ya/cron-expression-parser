@@ -91,5 +91,11 @@ func parseExpressionWithStep(rng string) (string, int, error) {
 	return rangeStr, step, nil
 }
 
-func parseExpression(rng string, min, max int) ([]int, error)
+func parseExpression(rng string, min, max int) ([]int, error) {
+	if rng == "*" {
+		vals := make([]int, 0, max-min+1)
+	}
+	return nil, nil
+}
+
 func filterByStep(minutes []int, step int) []int
