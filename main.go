@@ -1,3 +1,5 @@
+// 1-5/2,10-15/3 * * * * /bin/echo
+
 package main
 
 import (
@@ -58,6 +60,7 @@ func run() error {
 	fmt.Println(daysOfWeek)
 	fmt.Println(command)
 
+	draw(minutes, hours, daysOfMonth, months, daysOfWeek, command)
 	return nil
 }
 
