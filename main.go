@@ -146,4 +146,13 @@ func parseExpression(rng string, min, max int) ([]int, error) {
 	return values, nil
 }
 
-func filterByStep(minutes []int, step int) []int
+func filterByStep(values []int, step int) []int {
+	var filtered []int
+	for i, v := range values {
+		if i%step == 0 {
+			filtered = append(filtered, v)
+		}
+	}
+
+	return filtered
+}
