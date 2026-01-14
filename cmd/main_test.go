@@ -44,6 +44,13 @@ func Test_parse(t *testing.T) {
 			want: []int{1, 3, 5},
 		},
 		{
+			name: "multiple ranges with step",
+			str:  "1-5/2,10-15/3",
+			min:  0,
+			max:  59,
+			want: []int{1, 3, 5, 10, 13},
+		},
+		{
 			name:    "invalid range",
 			str:     "1-",
 			min:     0,
@@ -60,6 +67,20 @@ func Test_parse(t *testing.T) {
 		{
 			name:    "invalid step",
 			str:     "1-5/2/3",
+			min:     0,
+			max:     59,
+			wantErr: true,
+		},
+		{
+			name:    "invalid step",
+			str:     "1-5/2/3,10-15/3",
+			min:     0,
+			max:     59,
+			wantErr: true,
+		},
+		{
+			name:    "invalid range",
+			str:     "1-5/2,10-15/3,",
 			min:     0,
 			max:     59,
 			wantErr: true,
