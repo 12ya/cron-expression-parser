@@ -8,6 +8,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"text/tabwriter"
 )
 
 const totalFields = 6
@@ -180,12 +181,14 @@ func filterByStep(values []int, step int) []int {
 }
 
 func draw(minutes, hours, daysOfMonth, months, daysOfWeek []int, command string) {
-	fmt.Println("minute\t", strings.Join(intsToStrs(minutes), " "))
-	fmt.Println("hour\t", strings.Join(intsToStrs(hours), " "))
-	fmt.Println("day of month\t", strings.Join(intsToStrs(daysOfMonth), " "))
-	fmt.Println("month\t", strings.Join(intsToStrs(months), " "))
-	fmt.Println("day of week\t", strings.Join(intsToStrs(daysOfWeek), " "))
-	fmt.Println("command\t", command)
+	w := tabwriter.NewWriter(os.Stdout, 0, 0, 1, ' ', 0)
+	fmt.Fprintf(w, "minute\t%s\n", strings.Join(intsToStrs(minutes), " "))
+	fmt.Fprintf(w, "hour\t%s\n", strings.Join(intsToStrs(hours), " "))
+	fmt.Fprintf(w, "day of month\t%s\n", strings.Join(intsToStrs(daysOfMonth), " "))
+	fmt.Fprintf(w, "month\t%s\n", strings.Join(intsToStrs(months), " "))
+	fmt.Fprintf(w, "day of week\t%s\n", strings.Join(intsToStrs(daysOfWeek), " "))
+	fmt.Fprintf(w, "command\t%s\n", command)
+	w.Flush()
 }
 
 func intsToStrs(ints []int) []string {
