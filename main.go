@@ -73,8 +73,7 @@ func parse(period string, min, max int) ([]int, error) {
 		err    error
 	)
 
-	ranges := strings.Split(period, ",")
-	for _, rng = range ranges {
+	for rng = range strings.SplitSeq(period, ",") {
 		if strings.Contains(rng, "/") {
 			rng, step, err = parseExpressionWithStep(rng)
 			if err != nil {
