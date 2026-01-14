@@ -38,5 +38,41 @@ func run() error {
 }
 
 func parse(period string, min, max int) ([]int, error) {
-	return nil, nil
+	if period == "" {
+		return nil, nil
+	}
+
+	var (
+		values []int
+		rng    string
+		step   int
+		err    error
+	)
+
+	ranges := strings.Split(period, ",")
+	for _, rng = range ranges {
+		if strings.Contains(rng, "/") {
+			rng, step, err = parseExpressionWithStep(rng)
+			if err != nil {
+				return nil, err
+			}
+		}
+
+		rangeMinutes, err := parseExpression(rng, min, max)
+		if err != nil {
+			return nil, err
+		}
+
+		if step > 0 {
+			rangeMinutes = filterByStep(rangeMinutes, step)
+		}
+
+		values = append(values, rangeMinutes...)
+	}
+
+	return values, nil
 }
+
+func parseExpressionWithStep(rng string) (string, int, error)
+func parseExpression(rng string, min, max int) ([]int, error)
+func filterByStep(minutes []int, step int) []int
