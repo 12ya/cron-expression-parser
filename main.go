@@ -16,7 +16,7 @@ func main() {
 
 func run() error {
 	if len(os.Args) < 2 {
-		return fmt.Errorf("Usage: go run . <cron expression>", os.Args[0])
+		return fmt.Errorf("Usage: go run . <cron expression>: %s", os.Args[0])
 	}
 
 	cronExpression := os.Args[1]
@@ -30,10 +30,33 @@ func run() error {
 
 	minutes, err := parse(parts[0], 0, 59)
 	if err != nil {
-		return fmt.Errorf("parse minutes: %s", err)
+		return fmt.Errorf("error parsing minutes: %s", err)
+	}
+	hours, err := parse(parts[1], 0, 23)
+	if err != nil {
+		return fmt.Errorf("error parsing hours: %s", err)
+	}
+	daysOfMonth, err := parse(parts[2], 1, 31)
+	if err != nil {
+		return fmt.Errorf("error parsing days of month: %s", err)
+	}
+	months, err := parse(parts[3], 1, 12)
+	if err != nil {
+		return fmt.Errorf("error parsing months: %s", err)
+	}
+	daysOfWeek, err := parse(parts[4], 0, 6)
+	if err != nil {
+		return fmt.Errorf("error parsing days of week: %s", err)
 	}
 
+	command := parts[5]
+
 	fmt.Println(minutes)
+	fmt.Println(hours)
+	fmt.Println(daysOfMonth)
+	fmt.Println(months)
+	fmt.Println(daysOfWeek)
+	fmt.Println(command)
 
 	return nil
 }
@@ -59,16 +82,16 @@ func parse(period string, min, max int) ([]int, error) {
 			}
 		}
 
-		rangeMinutes, err := parseExpression(rng, min, max)
+		rangeValues, err := parseExpression(rng, min, max)
 		if err != nil {
 			return nil, err
 		}
 
 		if step > 0 {
-			rangeMinutes = filterByStep(rangeMinutes, step)
+			rangeValues = filterByStep(rangeValues, step)
 		}
 
-		values = append(values, rangeMinutes...)
+		values = append(values, rangeValues...)
 	}
 
 	return values, nil
