@@ -111,7 +111,39 @@ func parseExpression(rng string, min, max int) ([]int, error) {
 		return []int{val}, nil
 	}
 
-	return nil, nil
+	parts := strings.Split(rng, "-")
+	if len(parts) != 2 {
+		return nil, fmt.Errorf("invalid range: %s", rng)
+	}
+
+	start, err := strconv.Atoi(parts[0])
+	if err != nil {
+		return nil, fmt.Errorf("invalid range(%s) star: %s", rng, parts[0])
+	}
+
+	end, err := strconv.Atoi(parts[1])
+	if err != nil {
+		return nil, fmt.Errorf("invalid range(%s) end: %s", rng, parts[1])
+	}
+
+	if start < min || start > max {
+		return nil, fmt.Errorf("invalid range(%s) start: %d", rng, start)
+	}
+
+	if end < min || end > max {
+		return nil, fmt.Errorf("invalid range(%s) end: %d", rng, end)
+	}
+
+	if start > end {
+		return nil, fmt.Errorf("invalid range(%s): %d > %d, want start < end", rng, start, end)
+	}
+
+	values := make([]int, 0, end-start+1)
+	for i := start; i <= end; i++ {
+		values = append(values, i)
+	}
+
+	return values, nil
 }
 
 func filterByStep(minutes []int, step int) []int
