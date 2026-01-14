@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -73,6 +74,22 @@ func parse(period string, min, max int) ([]int, error) {
 	return values, nil
 }
 
-func parseExpressionWithStep(rng string) (string, int, error)
+func parseExpressionWithStep(rng string) (string, int, error) {
+	parts := strings.Split(rng, "/")
+	if len(parts) != 2 {
+		return "", 0, fmt.Errorf("invalid range/step: %s", rng)
+	}
+
+	rangeStr := parts[0]
+	stepStr := parts[1]
+
+	step, err := strconv.Atoi(stepStr)
+	if err != nil {
+		return "", 0, fmt.Errorf("invalid step: %s", stepStr)
+	}
+
+	return rangeStr, step, nil
+}
+
 func parseExpression(rng string, min, max int) ([]int, error)
 func filterByStep(minutes []int, step int) []int
