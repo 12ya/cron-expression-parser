@@ -28,8 +28,6 @@ func run() error {
 		return fmt.Errorf("cron expression is empty")
 	}
 
-	fmt.Println(cronExpression, "-----expresssion-----")
-
 	parts := strings.Fields(cronExpression)
 	if len(parts) != totalFields {
 		return fmt.Errorf("invalid cron expression: %s - must have exactly %d fields, e.g.: */15 0 1,15 * 1-5 /bin/echo", cronExpression, totalFields)
@@ -57,13 +55,6 @@ func run() error {
 	}
 
 	command := parts[5]
-
-	fmt.Println(minutes)
-	fmt.Println(hours)
-	fmt.Println(daysOfMonth)
-	fmt.Println(months)
-	fmt.Println(daysOfWeek)
-	fmt.Println(command)
 
 	draw(minutes, hours, daysOfMonth, months, daysOfWeek, command)
 	return nil
