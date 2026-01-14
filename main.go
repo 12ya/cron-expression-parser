@@ -182,10 +182,10 @@ func filterByStep(values []int, step int) []int {
 func draw(minutes, hours, daysOfMonth, months, daysOfWeek []int, command string) {
 	fmt.Println("minute\t", strings.Join(intsToStrs(minutes), " "))
 	fmt.Println("hour\t", strings.Join(intsToStrs(hours), " "))
-	fmt.Println("day of month\t", strings.Join(intsToStrs(minutes), " "))
-	fmt.Println("month\t", strings.Join(intsToStrs(minutes), " "))
-	fmt.Println("day of week\t", strings.Join(intsToStrs(minutes), " "))
-	fmt.Println("command\t", strings.Join(intsToStrs(minutes), " "))
+	fmt.Println("day of month\t", strings.Join(intsToStrs(daysOfMonth), " "))
+	fmt.Println("month\t", strings.Join(intsToStrs(months), " "))
+	fmt.Println("day of week\t", strings.Join(intsToStrs(daysOfWeek), " "))
+	fmt.Println("command\t", command)
 }
 
 func intsToStrs(ints []int) []string {
