@@ -93,8 +93,24 @@ func parseExpressionWithStep(rng string) (string, int, error) {
 
 func parseExpression(rng string, min, max int) ([]int, error) {
 	if rng == "*" {
-		vals := make([]int, 0, max-min+1)
+		values := make([]int, 0, max-min+1)
+		for i := min; i <= max; i++ {
+			values = append(values, i)
+		}
+		return values, nil
 	}
+
+	if !strings.Contains(rng, "-") {
+		val, err := strconv.Atoi(rng)
+		if err != nil {
+			return nil, err
+		}
+		if val < min || val > max {
+			return nil, fmt.Errorf("value is not in range (%d-%d): %d", min, max, val)
+		}
+		return []int{val}, nil
+	}
+
 	return nil, nil
 }
 
